@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Chronicle | Bilingual Digital News Portal & CMS</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=Inter:wght@300;400;500;600;700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['Merriweather', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                        hindi: ['Noto Serif Devanagari', 'serif']
+                    },
+                    colors: {
+                        newsRed: '#DC2626',
+                        newsDark: '#0F172A',
+                        lightBg: '#F8FAFC'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        .animate-marquee {
+            display: inline-block;
+            white-space: nowrap;
+            animation: marquee 35s linear infinite;
+        }
+        .animate-marquee:hover {
+            animation-play-state: paused;
+        }
+    </style>
+</head>
+<body class="bg-lightBg text-slate-900 font-sans antialiased selection:bg-newsRed selection:text-white">
+
+    <!-- 1. TOP UTILITY BAR -->
+    <div class="bg-newsDark text-slate-300 text-xs py-2 px-4 border-b border-slate-800">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
+            <div class="flex items-center space-x-4">
+                <span class="flex items-center gap-1.5 font-medium text-slate-200">
+                    <svg class="w-3.5 h-3.5 text-newsRed" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg> 
+                    12 October 2026
+                </span>
+                <span class="text-slate-600">|</span>
+                <span class="text-slate-300">Indore: <span class="text-amber-400 font-semibold">28°C ☀️</span></span>
+            </div>
+            <div class="flex items-center space-x-4 font-medium">
+                <button onclick="openModal('About Us Page', 'The Chronicle is a modern bilingual digital news portal delivering professional news presentation and editorial credibility.')" class="hover:text-white transition cursor-pointer">About Us</button>
+                <button onclick="openModal('Editorial Policy', 'Strict adherence to factual reporting, verified sources, and transparent corrections policy.')" class="hover:text-white transition cursor-pointer">Editorial Policy</button>
+                <button onclick="openModal('Contact Us', 'Reach out to our newsrooms in Hindi and English editions. Email: contact@thechronicle.news')" class="hover:text-white transition cursor-pointer">Contact</button>
+                
+                <!-- Admin Panel Toggle Button -->
+                <button onclick="toggleAdminModal()" class="bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-3 py-0.5 rounded text-[10px] tracking-wider uppercase transition cursor-pointer shadow-sm">
+                    ⚙️ Admin CMS Panel
+                </button>
+
+                <!-- Language Selector -->
+                <div class="border-l border-slate-700 pl-3 flex items-center space-x-1.5">
+                    <button onclick="alert('Switched to English Content Experience')" class="bg-newsRed text-white px-2.5 py-0.5 rounded font-bold text-[10px] tracking-wider uppercase shadow-xs cursor-pointer hover:bg-red-700 transition">English</button>
+                    <button onclick="alert('हिंदी समाचार संस्करण सक्रिय किया गया')" class="text-slate-400 hover:text-white px-2 py-0.5 rounded text-[11px] font-hindi font-semibold transition cursor-pointer">हिंदी</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. BRAND HEADER & LOGO -->
+    <header class="bg-white border-b border-slate-200 py-6 shadow-xs">
+        <div class="max-w-7xl mx-auto px-4 flex justify-between items-center">
+            <a href="#" class="flex items-center space-x-3.5 group">
+                <div class="bg-newsRed text-white font-serif font-black text-3xl px-3.5 py-1.5 rounded shadow-sm tracking-wider group-hover:bg-red-700 transition">TC</div>
+                <div>
+                    <h1 class="font-serif font-black text-2xl md:text-3xl tracking-tight text-newsDark group-hover:text-newsRed transition">THE CHRONICLE</h1>
+                    <p class="text-[10px] uppercase tracking-[0.25em] text-slate-500 font-bold mt-0.5">Bilingual Digital News Portal & CMS</p>
+                </div>
+            </a>
+            <div class="hidden md:flex items-center space-x-4">
+                <button onclick="openModal('Live TV Stream', 'Live YouTube stream feed playing via responsive video player.')" class="flex items-center gap-2 border-2 border-red-600 text-newsRed hover:bg-red-50 px-4 py-2 rounded-full font-bold text-xs tracking-wider uppercase transition cursor-pointer shadow-xs">
+                    <span class="w-2.5 h-2.5 rounded-full bg-newsRed animate-ping"></span>
+                    Live TV / Stream
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- 3. STICKY CATEGORY NAVIGATION -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-xs">
+        <div class="max-w-7xl mx-auto px-4 flex space-x-7 overflow-x-auto scrollbar-none py-3.5 text-xs font-bold uppercase tracking-wider">
+            <a href="#" class="text-newsRed border-b-2 border-newsRed pb-1 whitespace-nowrap cursor-pointer">Home</a>
+            <a href="#national" onclick="openModal('National Category Listing', 'Browsing all verified articles under National category with latest-first ordering.')" class="text-slate-700 hover:text-newsRed transition pb-1 whitespace-nowrap cursor-pointer">National</a>
+            <a href="#world" onclick="openModal('World Category Listing', 'Browsing international news coverage and global affairs.')" class="text-slate-700 hover:text-newsRed transition pb-1 whitespace-nowrap cursor-pointer">World</a>
+            <a href="#business" onclick="openModal('Business Category Listing', 'Market indices, financial reforms, and economic reports.')" class="text-slate-700 hover:text-newsRed transition pb-1 whitespace-nowrap cursor-pointer">Business</a>
+            <a href="#technology" onclick="openModal('Technology Category Listing', 'Next-gen web architectures, AI frameworks, and digital security.')" class="text-slate-700 hover:text-newsRed transition pb-1 whitespace-nowrap cursor-pointer">Technology</a>
+            <a href="#sports" onclick="openModal('Sports Category Listing', 'Latest scores, athletic tournaments, and championship updates.')" class="text-slate-700 hover:text-newsRed transition pb-1 whitespace-nowrap cursor-pointer">Sports</a>
+            <a href="#entertainment" onclick="openModal('Entertainment Category Listing', 'Media reviews, cultural updates, and arts.')" class="text-slate-700 hover:text-newsRed transition pb-1 whitespace-nowrap cursor-pointer">Entertainment</a>
+            <a href="#hindi" onclick="openModal('Hindi News Section', 'Dedicated Hindi Unicode content articles and category listings.')" class="text-slate-700 hover:text-newsRed transition pb-1 whitespace-nowrap font-hindi normal-case text-sm cursor-pointer">हिंदी न्यूज़</a>
+            <a href="#youtube-section" class="text-slate-700 hover:text-newsRed transition pb-1 whitespace-nowrap cursor-pointer">Video News</a>
+        </div>
+    </nav>
+
+    <!-- 4. BREAKING NEWS TICKER -->
+    <div class="bg-red-50 border-b border-red-200/80 py-2.5 px-4 shadow-inner">
+        <div class="max-w-7xl mx-auto flex items-center space-x-3">
+            <span class="bg-newsRed text-white text-[10px] font-extrabold uppercase px-2.5 py-1 rounded tracking-wider shadow-xs whitespace-nowrap flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span> Breaking News
+            </span>
+            <div class="overflow-hidden whitespace-nowrap text-xs text-slate-800 font-semibold cursor-pointer" onclick="openModal('Breaking News Flash', 'Admin-managed live news ticker update broadcasted instantly across all reader views.')">
+                <span class="animate-marquee hover:underline">Global tech summit announces revolutionary AI frameworks for digital news security • Market indices hit record highs following fiscal reforms • Live coverage of international climate policy summit begins today.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. MAIN HERO & FEATURED SECTION -->
+    <main class="max-w-7xl mx-auto px-4 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <!-- Lead Story -->
+            <div class="lg:col-span-7 flex flex-col justify-between group cursor-pointer" onclick="openModal('News Article Detail Page', 'Headline: Next-Gen Web Architecture Sets New Standards for Real-Time Digital Broadcasting and Security. Features rich-text body, author info, publication timestamp, tags, embedded YouTube video, related articles, and SEO metadata.')">
+                <div class="relative overflow-hidden rounded-xl shadow-lg aspect-video bg-slate-900 border border-slate-200">
+                    <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=1000&q=80" alt="News Lead" class="w-full h-full object-cover group-hover:scale-105 transition duration-700 opacity-90">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+                    <span class="absolute top-4 left-4 bg-newsRed text-white text-[10px] uppercase font-extrabold px-3 py-1 rounded shadow-md tracking-wider">Technology</span>
+                    <div class="absolute bottom-6 left-6 right-6 text-white">
+                        <div class="text-xs text-slate-300 mb-2 flex items-center gap-2 font-medium">
+                            <span class="text-red-400 font-bold">By Editorial Team</span> • <span>10 mins ago</span>
+                        </div>
+                        <h2 class="font-serif text-2xl md:text-3xl font-bold leading-snug group-hover:text-red-200 transition">
+                            Next-Gen Web Architecture Sets New Standards for Real-Time Digital Broadcasting and Security
+                        </h2>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Top Headlines -->
+            <div class="lg:col-span-5 flex flex-col justify-between bg-white rounded-xl p-6 border border-slate-200/80 shadow-xs">
+                <div>
+                    <h3 class="font-serif font-bold text-base border-l-4 border-newsRed pl-3 text-newsDark mb-5 uppercase tracking-wide">Top Headlines</h3>
+                    
+                    <div class="space-y-4">
+                        <div class="flex gap-4 group cursor-pointer border-b border-slate-100 pb-4" onclick="openModal('Business Article Detail', 'Global markets surge as new digital asset policies gain regulatory approval.')">
+                            <img src="https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?auto=format&fit=crop&w=300&q=80" alt="Thumb" class="w-24 h-18 object-cover rounded-md shrink-0 group-hover:opacity-95 transition">
+                            <div>
+                                <span class="text-[10px] font-bold text-newsRed uppercase tracking-wider">Business</span>
+                                <h4 class="font-serif font-semibold text-xs md:text-sm leading-snug group-hover:text-newsRed transition mt-1">
+                                    Global markets surge as new digital asset policies gain regulatory approval.
+                                </h4>
+                                <span class="text-[11px] text-slate-400 mt-1 block font-medium">35 mins ago</span>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4 group cursor-pointer border-b border-slate-100 pb-4" onclick="openModal('National Article Detail', 'Urban infrastructure transformation projects slated for completion by Q4.')">
+                            <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=300&q=80" alt="Thumb" class="w-24 h-18 object-cover rounded-md shrink-0 group-hover:opacity-95 transition">
+                            <div>
+                                <span class="text-[10px] font-bold text-newsRed uppercase tracking-wider">National</span>
+                                <h4 class="font-serif font-semibold text-xs md:text-sm leading-snug group-hover:text-newsRed transition mt-1">
+                                    Urban infrastructure transformation projects slated for completion by Q4.
+                                </h4>
+                                <span class="text-[11px] text-slate-400 mt-1 block font-medium">1 hour ago</span>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4 group cursor-pointer" onclick="openModal('Innovation Article Detail', 'Advanced AI models empower newsrooms with automated fact-checking tools.')">
+                            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=300&q=80" alt="Thumb" class="w-24 h-18 object-cover rounded-md shrink-0 group-hover:opacity-95 transition">
+                            <div>
+                                <span class="text-[10px] font-bold text-newsRed uppercase tracking-wider">Innovation</span>
+                                <h4 class="font-serif font-semibold text-xs md:text-sm leading-snug group-hover:text-newsRed transition mt-1">
+                                    Advanced AI models empower newsrooms with automated fact-checking tools.
+                                </h4>
+                                <span class="text-[11px] text-slate-400 mt-1 block font-medium">2 hours ago</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 6. BILINGUAL CONTENT SECTIONS -->
+        <section class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
+                <div class="flex justify-between items-center mb-4 border-b pb-3">
+                    <h3 class="font-hindi font-bold text-xl text-newsDark">हिंदी समाचार (Hindi News Section)</h3>
+                    <button onclick="openModal('Hindi Listing Page', 'Dedicated Hindi news homepage and listing page with Unicode font rendering.')" class="text-xs text-newsRed font-bold hover:underline">सभी देखें →</button>
+                </div>
+                <div class="space-y-3 font-hindi">
+                    <div class="p-3 bg-slate-50 rounded-lg cursor-pointer hover:bg-slate-100 transition" onclick="openModal('Hindi Article Detail', 'डिजिटल मीडिया नीति में नए सुधार लागू, पत्रकारों के लिए कड़े सुरक्षा मानक निर्धारित।')">
+                        <span class="text-[10px] bg-red-100 text-newsRed px-2 py-0.5 rounded font-bold">राष्ट्रीय</span>
+                        <h4 class="font-bold text-sm mt-1">डिजिटल मीडिया नीति में नए सुधार लागू, पत्रकारों के लिए कड़े सुरक्षा मानक</h4>
+                    </div>
+                    <div class="p-3 bg-slate-50 rounded-lg cursor-pointer hover:bg-slate-100 transition" onclick="openModal('Hindi Article Detail', 'राष्ट्रीय राजमार्ग विकास परियोजना का अगला चरण समय से पहले पूरा होने के करीब।')">
+                        <span class="text-[10px] bg-blue-100 text-blue-700 px-2 py-0.5 rounded font-bold">व्यापार</span>
+                        <h4 class="font-bold text-sm mt-1">राष्ट्रीय राजमार्ग विकास परियोजना का अगला चरण समय से पहले पूरा होने के करीब</h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
+                <div class="flex justify-between items-center mb-4 border-b pb-3">
+                    <h3 class="font-serif font-bold text-xl text-newsDark">English News Section</h3>
+                    <button onclick="openModal('English Listing Page', 'Dedicated English news listing page.')" class="text-xs text-newsRed font-bold hover:underline">View All →</button>
+                </div>
+                <div class="space-y-3">
+                    <div class="p-3 bg-slate-50 rounded-lg cursor-pointer hover:bg-slate-100 transition" onclick="openModal('English Article Detail', 'Global Technology Alliance outlines roadmap for high-trust digital content distribution.')">
+                        <span class="text-[10px] bg-red-100 text-newsRed px-2 py-0.5 rounded font-bold uppercase">World</span>
+                        <h4 class="font-serif font-semibold text-sm mt-1">Global Technology Alliance outlines roadmap for high-trust digital content distribution</h4>
+                    </div>
+                    <div class="p-3 bg-slate-50 rounded-lg cursor-pointer hover:bg-slate-100 transition" onclick="openModal('English Article Detail', 'Venture investments into sustainable infrastructure reach new annual peak.')">
+                        <span class="text-[10px] bg-blue-100 text-blue-700 px-2 py-0.5 rounded font-bold uppercase">Economy</span>
+                        <h4 class="font-serif font-semibold text-sm mt-1">Venture investments into sustainable infrastructure reach new annual peak</h4>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. YOUTUBE VIDEO SECTION -->
+        <section id="youtube-section" class="mt-12 bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200">
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <span class="text-newsRed font-bold uppercase text-[10px] tracking-widest bg-red-50 px-2.5 py-1 rounded border border-red-200">Multimedia Hub</span>
+                    <h3 class="font-serif text-2xl font-bold mt-2 text-newsDark">Featured Video News & Reports (YouTube Integrated)</h3>
+                </div>
+                <button onclick="openModal('Video News Page', 'Embedded YouTube video player and language-filtered video category browser.')" class="text-xs font-bold uppercase tracking-wider bg-newsRed hover:bg-red-700 text-white px-4 py-2.5 rounded-lg transition shadow-md cursor-pointer">Open Video News Hub →</button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-slate-50 rounded-xl overflow-hidden group cursor-pointer border border-slate-200 hover:shadow-md transition" onclick="openModal('YouTube Video Player', 'Playing embedded YouTube video URL via Manual YouTube Integration.')">
+                    <div class="relative aspect-video bg-slate-900">
+                        <img src="https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=600&q=80" alt="Video" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="w-12 h-12 bg-newsRed rounded-full flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition">
+                                <svg class="w-5 h-5 fill-current translate-x-0.5" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <span class="text-[10px] text-newsRed font-bold uppercase tracking-wider">Special Report</span>
+                        <h4 class="font-serif font-semibold text-sm mt-1 leading-snug text-slate-900">The Evolution of Digital Media Publishing in 2026</h4>
+                    </div>
+                </div>
+
+                <div class="bg-slate-50 rounded-xl overflow-hidden group cursor-pointer border border-slate-200 hover:shadow-md transition" onclick="openModal('YouTube Video Player', 'Playing embedded YouTube video URL.')">
+                    <div class="relative aspect-video bg-slate-900">
+                        <img src="https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?auto=format&fit=crop&w=600&q=80" alt="Video" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="w-12 h-12 bg-newsRed rounded-full flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition">
+                                <svg class="w-5 h-5 fill-current translate-x-0.5" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <span class="text-[10px] text-newsRed font-bold uppercase tracking-wider">Economic Panel</span>
+                        <h4 class="font-serif font-semibold text-sm mt-1 leading-snug text-slate-900">Global Economic Outlook & Tech Growth Analysis</h4>
+                    </div>
+                </div>
+
+                <div class="bg-slate-50 rounded-xl overflow-hidden group cursor-pointer border border-slate-200 hover:shadow-md transition" onclick="openModal('YouTube Video Player', 'Playing embedded YouTube video URL.')">
+                    <div class="relative aspect-video bg-slate-900">
+                        <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=600&q=80" alt="Video" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="w-12 h-12 bg-newsRed rounded-full flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition">
+                                <svg class="w-5 h-5 fill-current translate-x-0.5" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <span class="text-[10px] text-newsRed font-bold uppercase tracking-wider">Tech Review</span>
+                        <h4 class="font-serif font-semibold text-sm mt-1 leading-snug text-slate-900">Inside the Next-Gen Cloud Infrastructure Labs</h4>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 8. FOOTER -->
+    <footer class="bg-newsDark text-slate-400 mt-16 border-t border-slate-800 py-12">
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+                <div class="flex items-center space-x-3 mb-4">
+                    <div class="bg-newsRed text-white font-serif font-black text-xl px-3 py-1 rounded">TC</div>
+                    <span class="font-serif font-bold text-white text-lg tracking-wide">THE CHRONICLE</span>
+                </div>
+                <p class="text-xs leading-relaxed text-slate-400">Delivering authoritative, credible, and real-time news coverage across Hindi and English editions worldwide.</p>
+            </div>
+            <div>
+                <h5 class="text-white font-bold text-xs uppercase tracking-wider mb-4">Categories</h5>
+                <ul class="space-y-2 text-xs font-medium">
+                    <li><button onclick="openModal('National Category')" class="hover:text-white transition cursor-pointer">National & World</button></li>
+                    <li><button onclick="openModal('Business Category')" class="hover:text-white transition cursor-pointer">Business & Markets</button></li>
+                    <li><button onclick="openModal('Technology Category')" class="hover:text-white transition cursor-pointer">Technology & AI</button></li>
+                    <li><button onclick="openModal('Sports Category')" class="hover:text-white transition cursor-pointer">Sports & Entertainment</button></li>
+                </ul>
+            </div>
+            <div>
+                <h5 class="text-white font-bold text-xs uppercase tracking-wider mb-4">Policies & Legal</h5>
+                <ul class="space-y-2 text-xs font-medium">
+                    <li><button onclick="openModal('Privacy Policy', 'Data privacy and cookies compliance policy.')" class="hover:text-white transition cursor-pointer">Privacy Policy</button></li>
+                    <li><button onclick="openModal('Terms & Conditions', 'Portal usage terms and editorial conditions.')" class="hover:text-white transition cursor-pointer">Terms & Conditions</button></li>
+                    <li><button onclick="openModal('Corrections Policy', 'Transparent public corrections and retractions policy.')" class="hover:text-white transition cursor-pointer">Corrections Policy</button></li>
+                </ul>
+            </div>
+            <div>
+                <h5 class="text-white font-bold text-xs uppercase tracking-wider mb-4">Newsletter</h5>
+                <p class="text-xs mb-3 text-slate-400">Subscribe to get daily top headlines directly in your inbox.</p>
+                <div class="flex">
+                    <input type="email" placeholder="Your email address" class="bg-slate-800 text-xs px-3 py-2.5 rounded-l-lg text-white outline-none w-full border border-slate-700 focus:border-newsRed">
+                    <button onclick="openModal('Newsletter Subscription', 'Thank you! Your email has been registered for daily newsletter dispatch.')" class="bg-newsRed text-white px-4 py-2.5 rounded-r-lg text-xs font-bold hover:bg-red-700 transition cursor-pointer">Join</button>
+                </div>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 border-t border-slate-800 mt-10 pt-6 text-center text-xs text-slate-500 font-medium">
+            © 2026 The Chronicle News Agency. All rights reserved. Designed according to SOW specifications.
+        </div>
+    </footer>
+
+    <!-- ========================================== -->
+    <!-- 9. ADMIN CMS DASHBOARD MODAL               -->
+    <!-- ========================================== -->
+    <div id="adminModal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-5xl rounded-2xl shadow-2xl overflow-hidden border border-slate-200 flex flex-col max-h-[90vh]">
+            <div class="bg-newsDark text-white px-6 py-4 flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <span class="bg-amber-500 text-slate-950 font-bold px-2.5 py-1 rounded text-xs uppercase">CMS Dashboard</span>
+                    <h3 class="font-bold text-sm">Administrative Control & Content Management System</h3>
+                </div>
+                <button onclick="toggleAdminModal()" class="text-slate-400 hover:text-white text-xl font-bold cursor-pointer">&times;</button>
+            </div>
+
+            <div class="p-6 overflow-y-auto space-y-6 bg-slate-50">
+                <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
+                        <span class="text-xs text-slate-500 font-medium">Published Articles</span>
+                        <h4 class="text-2xl font-bold text-newsDark mt-1">1,248</h4>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
+                        <span class="text-xs text-slate-500 font-medium">Hindi / English Split</span>
+                        <h4 class="text-2xl font-bold text-newsRed mt-1">540 / 708</h4>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
+                        <span class="text-xs text-slate-500 font-medium">YouTube Videos</span>
+                        <h4 class="text-2xl font-bold text-blue-600 mt-1">86</h4>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
+                        <span class="text-xs text-slate-500 font-medium">Active Roles</span>
+                        <h4 class="text-xl font-bold text-emerald-600 mt-1">Super Admin / Editor</h4>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-xs space-y-4">
+                    <div class="flex justify-between items-center border-b pb-3">
+                        <h4 class="font-bold text-sm uppercase tracking-wider text-newsDark">News Management & Rich-Text Editor</h4>
+                        <button onclick="alert('Article created successfully and saved to MongoDB!')" class="bg-newsRed text-white text-xs font-bold px-4 py-2 rounded-lg hover:bg-red-700 transition cursor-pointer">+ Create New Article</button>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                        <div>
+                            <label class="font-bold block mb-1">Article Headline</label>
+                            <input type="text" placeholder="Enter headline in Hindi or English..." class="w-full border rounded p-2 outline-none focus:border-newsRed">
+                        </div>
+                        <div>
+                            <label class="font-bold block mb-1">Select Language & Category</label>
+                            <select class="w-full border rounded p-2 outline-none">
+                                <option>English - Technology</option>
+                                <option>Hindi (हिंदी) - National</option>
+                                <option>English - Business</option>
+                            </select>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="font-bold block mb-1">YouTube Video URL Integration</label>
+                            <input type="text" placeholder="https://www.youtube.com/watch?v=..." class="w-full border rounded p-2 outline-none">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="font-bold block mb-1">Cloudinary Media Library Upload</label>
+                            <input type="file" class="w-full border rounded p-2 bg-slate-50 text-xs">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-xs">
+                    <h4 class="font-bold text-sm uppercase tracking-wider text-newsDark mb-3">Role-Based Access Control</h4>
+                    <table class="w-full text-xs text-left border-collapse">
+                        <thead>
+                            <tr class="border-b bg-slate-100">
+                                <th class="p-2">Role</th>
+                                <th class="p-2">Proposed Permissions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b"><td class="p-2 font-bold">Super Admin</td><td class="p-2">Full system and user management access</td></tr>
+                            <tr class="border-b"><td class="p-2 font-bold">Administrator</td><td class="p-2">Content, category and approved configuration management</td></tr>
+                            <tr class="border-b"><td class="p-2 font-bold">Editor</td><td class="p-2">Review, edit and publish content as authorized</td></tr>
+                            <tr><td class="p-2 font-bold">Reporter / Author</td><td class="p-2">Create and manage assigned content and drafts</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="bg-slate-100 px-6 py-3 border-t flex justify-between items-center text-xs">
+                <span class="text-slate-500">MongoDB Database & Cloudinary Connected</span>
+                <button onclick="toggleAdminModal()" class="bg-slate-800 text-white px-4 py-1.5 rounded font-bold cursor-pointer">Close Dashboard</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 10. GENERAL POPUP MODAL                    -->
+    <!-- ========================================== -->
+    <div id="generalModal" class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-lg rounded-2xl shadow-xl overflow-hidden p-6 border border-slate-200 space-y-4">
+            <div class="flex justify-between items-center border-b pb-3">
+                <h3 id="modalTitle" class="font-serif font-bold text-lg text-newsDark">Module Preview</h3>
+                <button onclick="closeModal()" class="text-slate-400 hover:text-slate-700 text-xl font-bold cursor-pointer">&times;</button>
+            </div>
+            <p id="modalDesc" class="text-xs text-slate-600 leading-relaxed">Detailed view content goes here.</p>
+            <div class="border-t pt-4 flex justify-end">
+                <button onclick="closeModal()" class="bg-newsDark text-white text-xs px-4 py-2 rounded-lg font-bold cursor-pointer">Close Window</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openModal(title, desc) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalDesc').innerText = desc;
+            document.getElementById('generalModal').classList.remove('hidden');
+        }
+        function closeModal() {
+            document.getElementById('generalModal').classList.add('hidden');
+        }
+        function toggleAdminModal() {
+            const modal = document.getElementById('adminModal');
+            modal.classList.toggle('hidden');
+        }
+    </script>
+
+</body>
+</html>
